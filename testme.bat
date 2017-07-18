@@ -1,1 +1,1 @@
-meteor test --driver-package=practicalmeteor:mocha
+npm run test
