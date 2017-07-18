@@ -1,6 +1,7 @@
 import {Meteor} from "meteor/meteor";
 import {Mongo} from "meteor/mongo";
 import moment from "moment";
+import SimpleSchema from "simpl-schema";
 
 
 export const Notes = new Mongo.Collection('note');
@@ -11,11 +12,29 @@ Meteor.methods({
             throw new Error('not-authorized');
         }
 
-        Notes.insert({
+        return Notes.insert({
             title: '',
             body: '',
-            UserId: this.userId,
+            userId: this.userId,
             updatedAt: moment.valueOf()
         });
+    },
+    'notes.remove'(_id){
+        if (!this.userId) {
+            throw new Error('not-authorized');
+        }
+        const idValidator = new SimpleSchema({
+            _id: {
+                type: String,
+                min: 1
+            }
+        }).newContext();
+        idValidator.validate({_id});
+        if (idValidator.isValid()) {
+            Notes.remove({_id, userId: this.userId});
+        }
+        else {
+            throw new Error('Invalid-Id');
+        }
     }
 });
