@@ -1,7 +1,9 @@
 import {Meteor} from "meteor/meteor";
 import {Mongo} from "meteor/mongo";
 import moment from "moment";
-export const Notes = Mongo.Collection('note');
+
+
+export const Notes = new Mongo.Collection('note');
 
 Meteor.methods({
     'notes.insert'(){

@@ -4,7 +4,7 @@ import {validateNewUser} from "./Users";
 
 
 if (Meteor.isServer) {
-    describe('users', function () {
+    describe('Users', function () {
         it('should add allow valid email address', function () {
             const testUser = {
                 emails: [
@@ -33,6 +33,7 @@ if (Meteor.isServer) {
         });
     });
 }
+//https://github.com/mjackson/expect
 
 /*
 const add = (a, b) => {

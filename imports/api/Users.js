@@ -1,7 +1,3 @@
-/**
- * Created by taha.amin on 7/12/2017.
- */
-
 import {Meteor} from "meteor/meteor";
 import SimpleSchema from "simpl-schema";
 
