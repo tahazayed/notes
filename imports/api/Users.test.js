@@ -1,5 +1,40 @@
+import {Meteor} from "meteor/meteor";
 import expect from "expect";
+import {validateNewUser} from "./Users";
 
+
+if (Meteor.isServer) {
+    describe('users', function () {
+        it('should add allow valid email address', function () {
+            const testUser = {
+                emails: [
+                    {
+                        address: 'test@example.com'
+                    }
+                ]
+
+            };
+            const res = validateNewUser(testUser);
+            expect(res).toBe(true);
+        });
+        it('should reject invalid email address', function () {
+            const testUser = {
+                emails: [
+                    {
+                        address: 'test'
+                    }
+                ]
+
+            };
+
+            expect(() => {
+                validateNewUser(testUser);
+            }).toThrow();
+        });
+    });
+}
+
+/*
 const add = (a, b) => {
     if (typeof b !== 'number') {
         return a + a;
@@ -30,5 +65,5 @@ describe('Square', function () {
         expect(res).toBe(121);
     });
 });
-
+ */
 
