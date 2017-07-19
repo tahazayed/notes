@@ -36,5 +36,39 @@ Meteor.methods({
         else {
             throw new Error('Invalid-Id');
         }
+    },
+    'notes.update'(_id, updates){
+        if (!this.userId) {
+            throw new Error('not-authorized');
+        }
+        const idValidator = new SimpleSchema({
+            _id: {
+                type: String,
+                min: 1
+            },
+            title: {
+                type: String,
+                optional: true
+            },
+            body: {
+                type: String,
+                optional: true
+            }
+        }).newContext();
+        idValidator.validate({
+            _id,
+            ...updates
+        });
+        if (idValidator.isValid()) {
+            Notes.update({_id, userId: this.userId}, {
+                $set: {
+                    updatedAt: moment.valueOf(),
+                    ...updates
+                }
+            });
+        }
+        else {
+            throw new Error(idValidator.validationErrors());
+        }
     }
 });
